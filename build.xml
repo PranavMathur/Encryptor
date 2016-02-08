@@ -1,0 +1,21 @@
+<project default="jar">
+
+	<target name="clean">
+		<delete dir="bin"/>
+		<delete file="Encryptor.jar"/>
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="bin"/>
+		<javac srcdir="src" destdir="bin" createMissingPackageInfoClass="false" includeAntRuntime="false"/>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="Encryptor.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="net.pranavmathur.encryptor.Main"/>
+			</manifest>
+		</jar>
+	</target>
+
+</project>
