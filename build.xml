@@ -18,6 +18,7 @@
 		<jar destfile="Encryptor.jar" basedir="bin">
 			<manifest>
 				<attribute name="Main-Class" value="net.pranavmathur.encryptor.Main"/>
+				<attribute name="Class-Path" value="lib/cli.jar"/>
 			</manifest>
 		</jar>
 	</target>
