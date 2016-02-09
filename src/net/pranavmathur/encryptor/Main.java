@@ -22,15 +22,14 @@ public class Main {
 		CommandLine line;
 		try {
 			line = parser.parse(options,  args);
-			String passphrase = (String) line.getParsedOptionValue("p");
-			interpretArguments(passphrase);
+			interpretArguments(line);
 		} catch (ParseException e) {
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("Encryptor", options);
+			formatter.printHelp("Encryptor [OPTION]... [FILE]...", options);
 		}
 	}
 	
-	private static void interpretArguments(String passphrase) {
+	private static void interpretArguments(CommandLine line) {
 		
 	}
 
