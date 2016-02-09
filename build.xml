@@ -7,7 +7,11 @@
 
 	<target name="compile" depends="clean">
 		<mkdir dir="bin"/>
-		<javac srcdir="src" destdir="bin" createMissingPackageInfoClass="false" includeAntRuntime="false"/>
+		<javac srcdir="src" destdir="bin" createMissingPackageInfoClass="false" includeAntRuntime="false">
+			<classpath>
+				<pathelement location="lib/cli.jar"/>
+			</classpath>
+		</javac>
 	</target>
 
 	<target name="jar" depends="compile">
