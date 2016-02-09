@@ -11,18 +11,27 @@ import org.apache.commons.cli.ParseException;
 public class Main {
 
 	public static void main(String[] args) {
-		Option passphrase = new Option("p", "passphrase", true, "use the given passphrase");
+		Option passphraseOption = Option.builder("p")
+				.longOpt("passphrase")
+				.desc("uses the given passphrase")
+				.numberOfArgs(1)
+				.build();
 		Options options = new Options();
-		options.addOption(passphrase);
+		options.addOption(passphraseOption);
 		CommandLineParser parser = new DefaultParser();
 		CommandLine line;
 		try {
 			line = parser.parse(options,  args);
-			System.out.println(line.hasOption("p"));
+			String passphrase = (String) line.getParsedOptionValue("p");
+			interpretArguments(passphrase);
 		} catch (ParseException e) {
 			HelpFormatter formatter = new HelpFormatter();
 			formatter.printHelp("Encryptor", options);
 		}
+	}
+	
+	private static void interpretArguments(String passphrase) {
+		
 	}
 
 }
