@@ -1,5 +1,8 @@
 package net.pranavmathur.encryptor;
 
+import java.nio.file.Path;
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -33,6 +36,11 @@ public class Main {
 		String passphrase = (String) line.getParsedOptionValue("p");
 		if (passphrase == null)
 			passphrase = new String(System.console().readPassword("Enter a passphrase: "));
+		List<Path> files = getFiles(line);
+	}
+	
+	private static List<Path> getFiles(CommandLine line) {
+		return null;
 	}
 
 }
