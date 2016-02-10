@@ -29,8 +29,10 @@ public class Main {
 		}
 	}
 	
-	private static void interpretArguments(CommandLine line) {
-		
+	private static void interpretArguments(CommandLine line) throws ParseException {
+		String passphrase = (String) line.getParsedOptionValue("p");
+		if (passphrase == null)
+			passphrase = new String(System.console().readPassword("Enter a passphrase: "));
 	}
 
 }
