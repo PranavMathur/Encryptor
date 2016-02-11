@@ -10,6 +10,7 @@
 		<javac srcdir="src" destdir="bin" createMissingPackageInfoClass="false" includeAntRuntime="false">
 			<classpath>
 				<pathelement location="lib/cli.jar"/>
+				<pathelement location="lib/io.jar"/>
 			</classpath>
 		</javac>
 	</target>
@@ -18,7 +19,7 @@
 		<jar destfile="Encryptor.jar" basedir="bin">
 			<manifest>
 				<attribute name="Main-Class" value="net.pranavmathur.encryptor.Main"/>
-				<attribute name="Class-Path" value="lib/cli.jar"/>
+				<attribute name="Class-Path" value="lib/cli.jar lib/io.jar"/>
 			</manifest>
 		</jar>
 	</target>
