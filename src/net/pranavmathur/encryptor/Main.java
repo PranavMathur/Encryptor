@@ -23,9 +23,8 @@ public class Main {
 		Options options = new Options();
 		options.addOption(passphraseOption);
 		CommandLineParser parser = new DefaultParser();
-		CommandLine line;
 		try {
-			line = parser.parse(options,  args);
+			CommandLine line = parser.parse(options,  args);
 			interpretArguments(line);
 		} catch (ParseException e) {
 			HelpFormatter formatter = new HelpFormatter();
