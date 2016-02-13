@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		Option passphraseOption = Option.builder("p")
 				.longOpt("passphrase")
-				.desc("uses the given passphrase")
+				.desc("use the given passphrase")
 				.numberOfArgs(1)
 				.build();
 		Options options = new Options();
