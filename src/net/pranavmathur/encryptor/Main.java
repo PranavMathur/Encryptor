@@ -22,8 +22,13 @@ public class Main {
 				.desc("uses the given passphrase")
 				.numberOfArgs(1)
 				.build();
+		Option visualOption = Option.builder("v")
+				.longOpt("visual")
+				.desc("prompt for password and files using GUI")
+				.build();
 		Options options = new Options();
 		options.addOption(passphraseOption);
+		options.addOption(visualOption);
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(options,  args);
