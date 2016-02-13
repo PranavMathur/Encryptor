@@ -36,6 +36,7 @@ public class Main {
 	}
 	
 	private static void interpretArguments(CommandLine line) throws ParseException {
+		if (line.getArgs().length == 0) return;
 		String optionalPassphrase = (String) line.getParsedOptionValue("p");
 		final String passphrase = optionalPassphrase != null ? 
 				optionalPassphrase : 
