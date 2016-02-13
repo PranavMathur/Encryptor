@@ -30,6 +30,7 @@ public class Main {
 			interpretArguments(line);
 		} catch (ParseException e) {
 			HelpFormatter formatter = new HelpFormatter();
+			System.out.println(e.getMessage());
 			formatter.printHelp("Encryptor [OPTION]... [FILE]...", options);
 		}
 	}
