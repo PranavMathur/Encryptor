@@ -4,7 +4,6 @@ import java.awt.FileDialog;
 import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +19,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FileUtils;
 
 public class Main {
 	
@@ -106,14 +106,14 @@ public class Main {
 			byte[] passBytes = passphrase.getBytes();
 			byte[] fileBytes;
 			try {
-				fileBytes = Files.readAllBytes(file.toPath());
+				fileBytes = FileUtils.readFileToByteArray(file);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
 			}
 			byte[] encryptedBytes = encryptBytes(fileBytes, passBytes);
 			try {
-				Files.write(file.toPath(), encryptedBytes);
+				FileUtils.writeByteArrayToFile(file, encryptedBytes);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
