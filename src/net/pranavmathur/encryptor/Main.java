@@ -1,9 +1,12 @@
 package net.pranavmathur.encryptor;
 
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -49,7 +52,7 @@ public class Main {
 	}
 	
 	private static void interpretArguments() throws ParseException {
-		if (line.getArgs().length == 0) return;
+		if (line.getArgs().length == 0 && !line.hasOption("v")) return;
 		final String passphrase;
 		if (line.hasOption("p")) {
 			passphrase = (String) line.getParsedOptionValue("p");
@@ -59,7 +62,12 @@ public class Main {
 			passphrase = getPassphrase();
 		}
 		if (passphrase == null) return;
-		List<File> files = getFiles(line.getArgs());
+		List<File> files;
+		if (line.hasOption("v")) {
+			files = getFilesVisual(line.getArgs());
+		} else {
+			files = getFiles(line.getArgs());
+		}
 		files.stream().forEach(file -> encryptFile(file, passphrase));
 	}
 	
@@ -79,6 +87,16 @@ public class Main {
 			files.add(new File(s));
 		}
 		return files;
+	}
+	
+	private static List<File> getFilesVisual(String[] args) {
+		FileDialog dialog = new FileDialog((Frame) null, "Open File");
+		dialog.setMode(FileDialog.LOAD);
+		dialog.setMultipleMode(true);
+		dialog.setVisible(true);
+		File[] files = dialog.getFiles();
+		dialog.dispose();
+		return Arrays.asList(files);
 	}
 	
 	private static boolean encryptFile(File file, String passphrase) {
