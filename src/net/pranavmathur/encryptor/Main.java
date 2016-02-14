@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -48,6 +51,12 @@ public class Main {
 					new String(System.console().readPassword("Enter a passphrase: "));
 		List<File> files = getFiles(line.getArgs());
 		files.stream().forEach(file -> encryptFile(file, passphrase));
+	}
+	
+	private static String getPasswordVisual() {
+		JPasswordField pf = new JPasswordField();
+		int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Passphrase", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		return okCxl == JOptionPane.OK_OPTION ? new String(pf.getPassword()) : null;
 	}
 	
 	private static List<File> getFiles(String[] args) {
