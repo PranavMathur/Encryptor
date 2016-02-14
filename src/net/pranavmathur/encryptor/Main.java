@@ -19,6 +19,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 public class Main {
+	
+	private static CommandLine line;
 
 	public static void main(String[] args) {
 		Option passphraseOption = Option.builder("p")
@@ -37,8 +39,8 @@ public class Main {
 		options.addOptionGroup(passphraseGroup);
 		CommandLineParser parser = new DefaultParser();
 		try {
-			CommandLine line = parser.parse(options,  args);
-			interpretArguments(line);
+			line = parser.parse(options,  args);
+			interpretArguments();
 		} catch (ParseException e) {
 			HelpFormatter formatter = new HelpFormatter();
 			System.out.println(e.getMessage());
@@ -46,7 +48,7 @@ public class Main {
 		}
 	}
 	
-	private static void interpretArguments(CommandLine line) throws ParseException {
+	private static void interpretArguments() throws ParseException {
 		if (line.getArgs().length == 0) return;
 		String optionalPassphrase = (String) line.getParsedOptionValue("p");
 		final String passphrase = optionalPassphrase != null ? 
