@@ -14,6 +14,7 @@ import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -30,8 +31,10 @@ public class Main {
 				.desc("prompt for password and files using GUI")
 				.build();
 		Options options = new Options();
-		options.addOption(passphraseOption);
-		options.addOption(visualOption);
+		OptionGroup passphraseGroup = new OptionGroup();
+		passphraseGroup.addOption(passphraseOption);
+		passphraseGroup.addOption(visualOption);
+		options.addOptionGroup(passphraseGroup);
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(options,  args);
