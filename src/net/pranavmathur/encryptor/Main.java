@@ -52,7 +52,13 @@ public class Main {
 	}
 	
 	private static void interpretArguments() throws ParseException {
-		if (line.getArgs().length == 0 && !line.hasOption("v")) return;
+		List<File> files;
+		if (line.hasOption("v")) {
+			files = getFilesVisual(line.getArgs());
+		} else {
+			files = getFiles(line.getArgs());
+		}
+		if (files.size() == 0) return;
 		final String passphrase;
 		if (line.hasOption("p")) {
 			passphrase = (String) line.getParsedOptionValue("p");
@@ -62,12 +68,6 @@ public class Main {
 			passphrase = getPassphrase();
 		}
 		if (passphrase == null) return;
-		List<File> files;
-		if (line.hasOption("v")) {
-			files = getFilesVisual(line.getArgs());
-		} else {
-			files = getFiles(line.getArgs());
-		}
 		files.stream().forEach(file -> encryptFile(file, passphrase));
 	}
 	
