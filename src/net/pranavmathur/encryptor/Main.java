@@ -50,15 +50,24 @@ public class Main {
 	
 	private static void interpretArguments() throws ParseException {
 		if (line.getArgs().length == 0) return;
-		String optionalPassphrase = (String) line.getParsedOptionValue("p");
-		final String passphrase = optionalPassphrase != null ? 
-				optionalPassphrase : 
-					new String(System.console().readPassword("Enter a passphrase: "));
+		final String passphrase;
+		if (line.hasOption("p")) {
+			passphrase = (String) line.getParsedOptionValue("p");
+		} else if (line.hasOption("v")) {
+			passphrase = getPassphraseVisual();
+		} else {
+			passphrase = getPassphrase();
+		}
+		if (passphrase == null) return;
 		List<File> files = getFiles(line.getArgs());
 		files.stream().forEach(file -> encryptFile(file, passphrase));
 	}
 	
-	private static String getPasswordVisual() {
+	private static String getPassphrase() {
+		return new String(System.console().readPassword("Enter a passphrase: "));
+	}
+	
+	private static String getPassphraseVisual() {
 		JPasswordField pf = new JPasswordField();
 		int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Passphrase", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		return okCxl == JOptionPane.OK_OPTION ? new String(pf.getPassword()) : null;
