@@ -31,7 +31,7 @@ public class Main {
 				.desc("use the given passphrase")
 				.numberOfArgs(1)
 				.build();
-		Option visualOption = Option.builder("v")
+		Option visualOption = Option.builder("V")
 				.longOpt("visual")
 				.desc("prompt for password and files using GUI")
 				.build();
@@ -53,7 +53,7 @@ public class Main {
 	
 	private static void interpretArguments() throws ParseException {
 		List<File> files;
-		if (line.hasOption("v")) {
+		if (line.hasOption("V")) {
 			files = getFilesVisual(line.getArgs());
 		} else {
 			files = getFiles(line.getArgs());
@@ -62,7 +62,7 @@ public class Main {
 		final String passphrase;
 		if (line.hasOption("p")) {
 			passphrase = (String) line.getParsedOptionValue("p");
-		} else if (line.hasOption("v")) {
+		} else if (line.hasOption("V")) {
 			passphrase = getPassphraseVisual();
 		} else {
 			passphrase = getPassphrase();
