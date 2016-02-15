@@ -23,6 +23,7 @@ import org.apache.commons.io.FileUtils;
 
 public class Main {
 	
+	private static Options options;
 	private static CommandLine line;
 
 	public static void main(String[] args) {
@@ -35,7 +36,7 @@ public class Main {
 				.longOpt("visual")
 				.desc("prompt for password and files using GUI")
 				.build();
-		Options options = new Options();
+		options = new Options();
 		OptionGroup passphraseGroup = new OptionGroup();
 		passphraseGroup.addOption(passphraseOption);
 		passphraseGroup.addOption(visualOption);
@@ -45,9 +46,8 @@ public class Main {
 			line = parser.parse(options,  args);
 			interpretArguments();
 		} catch (ParseException e) {
-			HelpFormatter formatter = new HelpFormatter();
 			System.out.println(e.getMessage());
-			formatter.printHelp("Encryptor [OPTION]... [FILE]...", options);
+			printHelp();
 		}
 	}
 	
@@ -136,6 +136,11 @@ public class Main {
 			encryptedBytes[i] = (byte) (fileBytes[i] ^ passBytes[i % passBytes.length]);
 		}
 		return encryptedBytes;
+	}
+	
+	private static void printHelp() {
+		HelpFormatter formatter = new HelpFormatter();
+		formatter.printHelp("Encryptor [OPTION]... [FILE]...", options);
 	}
 
 }
