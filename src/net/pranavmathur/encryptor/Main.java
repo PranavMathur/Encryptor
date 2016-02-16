@@ -36,11 +36,16 @@ public class Main {
 				.longOpt("visual")
 				.desc("prompt for password and files using GUI")
 				.build();
+		Option verboseOption = Option.builder("v")
+				.longOpt("verbose")
+				.desc("print all file names as they are encrypted")
+				.build();
 		options = new Options();
 		OptionGroup passphraseGroup = new OptionGroup();
 		passphraseGroup.addOption(passphraseOption);
 		passphraseGroup.addOption(visualOption);
 		options.addOptionGroup(passphraseGroup);
+		options.addOption(verboseOption);
 		CommandLineParser parser = new DefaultParser();
 		try {
 			line = parser.parse(options,  args);
@@ -103,6 +108,9 @@ public class Main {
 		if (file.isDirectory()) {
 			encryptDirectory(file, passphrase);
 		} else {
+			if (line.hasOption("v")) {
+				System.out.println("Encrypting " + file.getPath());
+			}
 			byte[] passBytes = passphrase.getBytes();
 			byte[] fileBytes;
 			try {
