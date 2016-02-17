@@ -82,7 +82,8 @@ public class Main {
 	
 	private static String getPassphraseVisual() {
 		JPasswordField pf = new JPasswordField();
-		int okCxl = JOptionPane.showConfirmDialog(null, pf, "Enter Passphrase", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		int okCxl = JOptionPane.showConfirmDialog(
+				null, pf, "Enter Passphrase", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		return okCxl == JOptionPane.OK_OPTION ? new String(pf.getPassword()) : null;
 	}
 	
