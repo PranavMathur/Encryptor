@@ -44,6 +44,10 @@ public class Main {
 				.longOpt("help")
 				.desc("print this help message")
 				.build();
+		Option obfuscateOption = Option.builder("o")
+				.longOpt("obfuscate")
+				.desc("obfuscate file names")
+				.build();
 		options = new Options();
 		OptionGroup passphraseGroup = new OptionGroup();
 		passphraseGroup.addOption(passphraseOption);
@@ -51,6 +55,7 @@ public class Main {
 		options.addOptionGroup(passphraseGroup);
 		options.addOption(verboseOption);
 		options.addOption(helpOption);
+		options.addOption(obfuscateOption);
 		CommandLineParser parser = new DefaultParser();
 		try {
 			line = parser.parse(options,  args);
