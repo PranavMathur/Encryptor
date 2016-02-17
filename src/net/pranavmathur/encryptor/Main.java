@@ -40,12 +40,17 @@ public class Main {
 				.longOpt("verbose")
 				.desc("print all file names as they are encrypted")
 				.build();
+		Option helpOption = Option.builder()
+				.longOpt("help")
+				.desc("print this help message")
+				.build();
 		options = new Options();
 		OptionGroup passphraseGroup = new OptionGroup();
 		passphraseGroup.addOption(passphraseOption);
 		passphraseGroup.addOption(visualOption);
 		options.addOptionGroup(passphraseGroup);
 		options.addOption(verboseOption);
+		options.addOption(helpOption);
 		CommandLineParser parser = new DefaultParser();
 		try {
 			line = parser.parse(options,  args);
@@ -57,6 +62,10 @@ public class Main {
 	}
 	
 	private static void interpretArguments() throws ParseException {
+		if (line.hasOption("help")) {
+			printHelp();
+			return;
+		}
 		List<File> files;
 		if (line.hasOption("V")) {
 			files = getFilesVisual();
