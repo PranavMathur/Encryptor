@@ -59,7 +59,7 @@ public class Main {
 	private static void interpretArguments() throws ParseException {
 		List<File> files;
 		if (line.hasOption("V")) {
-			files = getFilesVisual(line.getArgs());
+			files = getFilesVisual();
 		} else {
 			files = getFiles(line.getArgs());
 		}
@@ -94,7 +94,7 @@ public class Main {
 		return files;
 	}
 	
-	private static List<File> getFilesVisual(String[] args) {
+	private static List<File> getFilesVisual() {
 		FileDialog dialog = new FileDialog((Frame) null, "Open File");
 		dialog.setMode(FileDialog.LOAD);
 		dialog.setMultipleMode(true);
