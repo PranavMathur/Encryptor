@@ -142,8 +142,21 @@ public class Main {
 				e.printStackTrace();
 				return false;
 			}
+			if (line.hasOption("o")) {
+				File obfuscated = new File(file.getParent(), encryptName(file.getName()));
+				try {
+					FileUtils.moveFile(file, obfuscated);
+				} catch (IOException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
 		}
 		return true;
+	}
+	
+	private static String encryptName(String path) {
+		return path;
 	}
 	
 	private static void encryptDirectory(File dir, String passphrase) {
