@@ -125,7 +125,7 @@ public class Main {
 		} else {
 			file = file.getAbsoluteFile();
 			if (line.hasOption("v")) {
-				System.out.println("Encrypting " + file.getPath());
+				System.out.print("Encrypting " + file.getPath());
 			}
 			byte[] passBytes = passphrase.getBytes();
 			byte[] fileBytes;
@@ -150,7 +150,9 @@ public class Main {
 					e.printStackTrace();
 					return false;
 				}
+				System.out.print(" to " + obfuscated.getPath());
 			}
+			System.out.println();
 		}
 		return true;
 	}
