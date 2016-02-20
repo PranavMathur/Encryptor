@@ -123,6 +123,7 @@ public class Main {
 		if (file.isDirectory()) {
 			encryptDirectory(file, passphrase);
 		} else {
+			file = file.getAbsoluteFile();
 			if (line.hasOption("v")) {
 				System.out.println("Encrypting " + file.getPath());
 			}
