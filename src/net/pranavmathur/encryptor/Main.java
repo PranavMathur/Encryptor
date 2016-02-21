@@ -150,7 +150,9 @@ public class Main {
 					e.printStackTrace();
 					return false;
 				}
-				System.out.print(" to " + obfuscated.getPath());
+				if (line.hasOption("v")) {
+					System.out.print(" to " + obfuscated.getPath());
+				}
 			}
 			System.out.println();
 		}
@@ -158,7 +160,15 @@ public class Main {
 	}
 	
 	private static String encryptName(String path) {
-		return path;
+		char[] chars = path.toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			if ((65 <= chars[i] && chars[i] <= 77) || (97 <= chars[i] && chars[i] <= 109)) {
+				chars[i] = (char)(chars[i] + 13);
+			} else if ((78 <= chars[i] && chars[i] <= 90) || (110 <= chars[i] && chars[i] <= 122)) {
+				chars[i] = (char)(chars[i] - 13);
+			}
+		}
+		return new String(chars);
 	}
 	
 	private static void encryptDirectory(File dir, String passphrase) {
