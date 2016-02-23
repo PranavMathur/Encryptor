@@ -124,22 +124,19 @@ public class Main {
 			encryptDirectory(file, passphrase);
 		} else {
 			file = file.getAbsoluteFile();
-			if (line.hasOption("v")) {
-				System.out.print("Encrypting " + file.getPath());
-			}
 			byte[] passBytes = passphrase.getBytes();
 			byte[] fileBytes;
 			try {
 				fileBytes = FileUtils.readFileToByteArray(file);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println("Error while reading " + file.getPath());
 				return false;
 			}
 			byte[] encryptedBytes = encryptBytes(fileBytes, passBytes);
 			try {
 				FileUtils.writeByteArrayToFile(file, encryptedBytes);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println("Error while writing to " + file.getPath());
 				return false;
 			}
 			if (line.hasOption("o")) {
@@ -147,14 +144,15 @@ public class Main {
 				try {
 					FileUtils.moveFile(file, obfuscated);
 				} catch (IOException e) {
-					e.printStackTrace();
+					System.err.println("Error while moving " + file.getPath() + " to " + obfuscated.getPath());
 					return false;
 				}
 				if (line.hasOption("v")) {
-					System.out.print(" to " + obfuscated.getPath());
+					System.out.println("Encrypted " + file.getPath() + " to " + obfuscated.getPath());
 				}
+			} else if (line.hasOption("v")) {
+				System.out.println("Encrypted " + file.getPath());
 			}
-			System.out.println();
 		}
 		return true;
 	}
