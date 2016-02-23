@@ -44,6 +44,10 @@ public class Main {
 				.longOpt("help")
 				.desc("print this help message")
 				.build();
+		Option obfuscateOption = Option.builder("o")
+				.longOpt("obfuscate")
+				.desc("obfuscate file names")
+				.build();
 		options = new Options();
 		OptionGroup passphraseGroup = new OptionGroup();
 		passphraseGroup.addOption(passphraseOption);
@@ -51,6 +55,7 @@ public class Main {
 		options.addOptionGroup(passphraseGroup);
 		options.addOption(verboseOption);
 		options.addOption(helpOption);
+		options.addOption(obfuscateOption);
 		CommandLineParser parser = new DefaultParser();
 		try {
 			line = parser.parse(options,  args);
@@ -118,26 +123,50 @@ public class Main {
 		if (file.isDirectory()) {
 			encryptDirectory(file, passphrase);
 		} else {
-			if (line.hasOption("v")) {
-				System.out.println("Encrypting " + file.getPath());
-			}
+			file = file.getAbsoluteFile();
 			byte[] passBytes = passphrase.getBytes();
 			byte[] fileBytes;
 			try {
 				fileBytes = FileUtils.readFileToByteArray(file);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println("Error while reading " + file.getPath());
 				return false;
 			}
 			byte[] encryptedBytes = encryptBytes(fileBytes, passBytes);
 			try {
 				FileUtils.writeByteArrayToFile(file, encryptedBytes);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.err.println("Error while writing to " + file.getPath());
 				return false;
+			}
+			if (line.hasOption("o")) {
+				File obfuscated = new File(file.getParent(), encryptName(file.getName()));
+				try {
+					FileUtils.moveFile(file, obfuscated);
+				} catch (IOException e) {
+					System.err.println("Error while moving " + file.getPath() + " to " + obfuscated.getPath());
+					return false;
+				}
+				if (line.hasOption("v")) {
+					System.out.println("Encrypted " + file.getPath() + " to " + obfuscated.getPath());
+				}
+			} else if (line.hasOption("v")) {
+				System.out.println("Encrypted " + file.getPath());
 			}
 		}
 		return true;
+	}
+	
+	private static String encryptName(String path) {
+		char[] chars = path.toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			if ((65 <= chars[i] && chars[i] <= 77) || (97 <= chars[i] && chars[i] <= 109)) {
+				chars[i] = (char)(chars[i] + 13);
+			} else if ((78 <= chars[i] && chars[i] <= 90) || (110 <= chars[i] && chars[i] <= 122)) {
+				chars[i] = (char)(chars[i] - 13);
+			}
+		}
+		return new String(chars);
 	}
 	
 	private static void encryptDirectory(File dir, String passphrase) {
