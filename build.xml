@@ -23,5 +23,15 @@
 			</manifest>
 		</jar>
 	</target>
+	
+	<target name="doc">
+		<delete dir="docs"/>
+		<javadoc sourcepath="src" destdir="docs">
+			<classpath>
+				<pathelement location="lib/cli.jar"/>
+				<pathelement location="lib/io.jar"/>
+			</classpath>
+		</javadoc>
+	</target>
 
 </project>
