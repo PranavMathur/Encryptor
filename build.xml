@@ -17,9 +17,9 @@
 
 	<target name="jar" depends="compile">
 		<jar destfile="Encryptor.jar" basedir="bin">
+			<zipgroupfileset includes="*.jar" dir="lib"/>
 			<manifest>
 				<attribute name="Main-Class" value="net.pranavmathur.encryptor.Main"/>
-				<attribute name="Class-Path" value="lib/cli.jar lib/io.jar"/>
 			</manifest>
 		</jar>
 	</target>
