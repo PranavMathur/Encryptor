@@ -140,7 +140,7 @@ public class Main {
 				return false;
 			}
 			if (line.hasOption("o")) {
-				File obfuscated = new File(file.getParent(), encryptName(file.getName()));
+				File obfuscated = new File(file.getParent(), obfuscateName(file.getName()));
 				try {
 					FileUtils.moveFile(file, obfuscated);
 				} catch (IOException e) {
@@ -157,7 +157,7 @@ public class Main {
 		return true;
 	}
 	
-	private static String encryptName(String path) {
+	private static String obfuscateName(String path) {
 		char[] chars = path.toCharArray();
 		for (int i = 0; i < chars.length; i++) {
 			if ((65 <= chars[i] && chars[i] <= 77) || (97 <= chars[i] && chars[i] <= 109)) {
