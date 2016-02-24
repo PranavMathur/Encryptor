@@ -67,6 +67,10 @@ public class Main {
 		options.addOption(verboseOption);
 		options.addOption(helpOption);
 		options.addOption(obfuscateOption);
+		if (args.length == 0) {
+			printHelp();
+			return;
+		}
 		CommandLineParser parser = new DefaultParser();
 		try {
 			line = parser.parse(options,  args);
