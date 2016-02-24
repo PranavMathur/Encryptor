@@ -102,7 +102,7 @@ public class Main {
 			passphrase = getPassphrase();
 		}
 		if (passphrase == null) return;
-		files.stream().forEach(file -> encryptFile(file, passphrase));
+		for (File f : files) encryptFile(f, passphrase);
 	}
 	
 	/**
