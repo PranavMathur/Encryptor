@@ -26,7 +26,7 @@
 	
 	<target name="doc">
 		<delete dir="docs"/>
-		<javadoc sourcepath="src" destdir="docs">
+		<javadoc sourcepath="src" destdir="docs" access="private">
 			<classpath>
 				<pathelement location="lib/cli.jar"/>
 				<pathelement location="lib/io.jar"/>
