@@ -1,2 +1,2 @@
 @echo off
-java -jar Encryptor.jar %*
+java -jar %~dp0/Encryptor.jar %*
