@@ -214,6 +214,10 @@ public class Main {
 				chars[i] = (char)(chars[i] + 13);
 			} else if ((78 <= chars[i] && chars[i] <= 90) || (110 <= chars[i] && chars[i] <= 122)) {
 				chars[i] = (char)(chars[i] - 13);
+			} else if (48 <= chars[i] && chars[i] <= 52) {
+				chars[i] = (char)(chars[i] + 5);
+			} else if (53 <= chars[i] && chars[i] <= 57) {
+				chars[i] = (char)(chars[i] - 5);
 			}
 		}
 		return new String(chars);
