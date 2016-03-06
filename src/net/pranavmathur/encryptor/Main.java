@@ -96,7 +96,10 @@ public class Main {
 		} else {
 			files = getFiles(line.getArgs());
 		}
-		if (files.size() == 0) return;
+		if (files.size() == 0) {
+			System.out.println("No files given");
+			printHelp();
+		}
 		final String passphrase;
 		if (line.hasOption("p")) {
 			passphrase = (String) line.getParsedOptionValue("p");
