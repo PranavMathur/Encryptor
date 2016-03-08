@@ -68,6 +68,7 @@ public class Main {
 		options.addOption(helpOption);
 		options.addOption(obfuscateOption);
 		if (args.length == 0) {
+			System.out.println("No args given");
 			printHelp();
 			return;
 		}
