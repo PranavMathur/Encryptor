@@ -8,9 +8,11 @@ import org.apache.commons.io.FileUtils;
 public class Encryptor {
 	
 	/**
-	 * Encrypts the given File. If the file is a directory, calls {@link #encryptDirectory(File, String)}.
+	 * Encrypts the given File. If the file is a directory, calls {@link #encryptDirectory(File, String, boolean, boolean)}.
 	 * @param file the file to encrypt
 	 * @param passphrase the passphrase with which to encrypt the file
+	 * @param obfuscate whether or not the filename should be obfuscated
+	 * @param verbose whether or not to output extra information
 	 * @return the success of the operation
 	 */
 	public static boolean encryptFile(File file, String passphrase, boolean obfuscate, boolean verbose) {
@@ -76,6 +78,8 @@ public class Encryptor {
 	 * Recursively encrypts all files in a directory.
 	 * @param dir the directory to encrypt
 	 * @param passphrase the passphrase with which to encrypt the directory
+	 * @param obfuscate whether or not the filename should be obfuscated
+	 * @param verbose whether or not to output extra information
 	 */
 	private static void encryptDirectory(File dir, String passphrase, boolean obfuscate, boolean verbose) {
 		for (File file : dir.listFiles()) {
