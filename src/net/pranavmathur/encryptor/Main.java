@@ -100,6 +100,7 @@ public class Main {
 		if (files.size() == 0) {
 			System.out.println("No files given");
 			printHelp();
+			return;
 		}
 		final String passphrase;
 		if (line.hasOption("p")) {
