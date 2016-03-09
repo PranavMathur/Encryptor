@@ -91,7 +91,7 @@ public class Main {
 			printHelp();
 			return;
 		}
-		List<File> files;
+		final List<File> files;
 		if (line.hasOption("V")) {
 			files = getFilesVisual();
 		} else {
