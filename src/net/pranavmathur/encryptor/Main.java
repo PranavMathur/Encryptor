@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -105,31 +102,12 @@ public class Main {
 		if (line.hasOption("p")) {
 			passphrase = (String) line.getParsedOptionValue("p");
 		} else if (line.hasOption("V")) {
-			passphrase = getPassphraseVisual();
+			passphrase = Passphrase.getPassphraseVisual();
 		} else {
-			passphrase = getPassphrase();
+			passphrase = Passphrase.getPassphrase();
 		}
 		if (passphrase == null) return;
 		for (File f : files) encryptFile(f, passphrase);
-	}
-	
-	/**
-	 * Retrieves the passphrase for encryption without echoing during input.
-	 * @return a string representation of the passphrase
-	 */
-	private static String getPassphrase() {
-		return new String(System.console().readPassword("Enter a passphrase: "));
-	}
-	
-	/**
-	 * Uses a swing password field to retrieve the passphrase.
-	 * @return a string representation of the passphrase
-	 */
-	private static String getPassphraseVisual() {
-		JPasswordField pf = new JPasswordField();
-		int okCxl = JOptionPane.showConfirmDialog(
-				null, pf, "Enter Passphrase", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-		return okCxl == JOptionPane.OK_OPTION ? new String(pf.getPassword()) : null;
 	}
 	
 	/**
