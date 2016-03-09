@@ -1,11 +1,7 @@
 package net.pranavmathur.encryptor;
 
-import java.awt.FileDialog;
-import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
@@ -90,9 +86,9 @@ public class Main {
 		}
 		List<File> files;
 		if (line.hasOption("V")) {
-			files = getFilesVisual();
+			files = Files.getFilesVisual();
 		} else {
-			files = getFiles(line.getArgs());
+			files = Files.getFiles(line.getArgs());
 		}
 		if (files.size() == 0) {
 			System.out.println("No files given");
@@ -108,33 +104,6 @@ public class Main {
 		}
 		if (passphrase == null) return;
 		for (File f : files) encryptFile(f, passphrase);
-	}
-	
-	/**
-	 * Retrieves a list of the Files for encryption.
-	 * @param args the array to be parsed
-	 * @return an {@code ArrayList} of files
-	 */
-	private static List<File> getFiles(String[] args) {
-		List<File> files = new ArrayList<File>();
-		for (String s : args) {
-			files.add(new File(s));
-		}
-		return files;
-	}
-	
-	/**
-	 * Uses a {@code FileDialog} to retrieve the files for encryption.
-	 * @return an {@code ArrayList} of files
-	 */
-	private static List<File> getFilesVisual() {
-		FileDialog dialog = new FileDialog((Frame) null, "Open File");
-		dialog.setMode(FileDialog.LOAD);
-		dialog.setMultipleMode(true);
-		dialog.setVisible(true);
-		File[] files = dialog.getFiles();
-		dialog.dispose();
-		return Arrays.asList(files);
 	}
 	
 	/**
