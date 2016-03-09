@@ -1,7 +1,6 @@
 package net.pranavmathur.encryptor;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
@@ -12,7 +11,6 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.io.FileUtils;
 
 public class Main {
 	
@@ -103,99 +101,9 @@ public class Main {
 			passphrase = Passphrase.getPassphrase();
 		}
 		if (passphrase == null) return;
-		for (File f : files) encryptFile(f, passphrase);
-	}
-	
-	/**
-	 * Encrypts the given File. If the file is a directory, calls {@link #encryptDirectory(File, String)}.
-	 * @param file the file to encrypt
-	 * @param passphrase the passphrase with which to encrypt the file
-	 * @return the success of the operation
-	 */
-	private static boolean encryptFile(File file, String passphrase) {
-		if (file.isDirectory()) {
-			encryptDirectory(file, passphrase);
-		} else {
-			file = file.getAbsoluteFile();
-			byte[] passBytes = passphrase.getBytes();
-			byte[] fileBytes;
-			try {
-				fileBytes = FileUtils.readFileToByteArray(file);
-			} catch (IOException e) {
-				System.err.println("Error while reading " + file.getPath());
-				return false;
-			}
-			byte[] encryptedBytes = encryptBytes(fileBytes, passBytes);
-			try {
-				FileUtils.writeByteArrayToFile(file, encryptedBytes);
-			} catch (IOException e) {
-				System.err.println("Error while writing to " + file.getPath());
-				return false;
-			}
-			if (line.hasOption("o")) {
-				File obfuscated = new File(file.getParent(), obfuscateName(file.getName()));
-				try {
-					FileUtils.moveFile(file, obfuscated);
-				} catch (IOException e) {
-					System.err.println("Error while moving " + file.getPath() + " to " + obfuscated.getPath());
-					return false;
-				}
-				if (line.hasOption("v")) {
-					System.out.println("Encrypted " + file.getPath() + " to " + obfuscated.getPath());
-				}
-			} else if (line.hasOption("v")) {
-				System.out.println("Encrypted " + file.getPath());
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Obfuscates the given name with a Caesar cipher with shift 13.
-	 * @param path the path to be obfuscated
-	 * @return the obfuscated path
-	 */
-	private static String obfuscateName(String path) {
-		char[] chars = path.toCharArray();
-		for (int i = 0; i < chars.length; i++) {
-			if ((65 <= chars[i] && chars[i] <= 77) || (97 <= chars[i] && chars[i] <= 109)) {
-				chars[i] = (char)(chars[i] + 13);
-			} else if ((78 <= chars[i] && chars[i] <= 90) || (110 <= chars[i] && chars[i] <= 122)) {
-				chars[i] = (char)(chars[i] - 13);
-			} else if (48 <= chars[i] && chars[i] <= 52) {
-				chars[i] = (char)(chars[i] + 5);
-			} else if (53 <= chars[i] && chars[i] <= 57) {
-				chars[i] = (char)(chars[i] - 5);
-			}
-		}
-		return new String(chars);
-	}
-	
-	/**
-	 * Recursively encrypts all files in a directory.
-	 * @param dir the directory to encrypt
-	 * @param passphrase the passphrase with which to encrypt the directory
-	 */
-	private static void encryptDirectory(File dir, String passphrase) {
-		for (File file : dir.listFiles()) {
-			encryptFile(file, passphrase);
-		}
-	}
-	
-	/**
-	 * Encrypts the given bytes using XOR encryption.
-	 * @param fileBytes the bytes of the file to be encrypted
-	 * @param passBytes the bytes of the passphrase with which to encrypt
-	 * @return the encrypted bytes
-	 */
-	private static byte[] encryptBytes(byte[] fileBytes, byte[] passBytes) {
-		if (fileBytes.length == 0 || passBytes.length == 0)
-			return fileBytes;
-		byte[] encryptedBytes = new byte[fileBytes.length];
-		for (int i = 0; i < encryptedBytes.length; i++) {
-			encryptedBytes[i] = (byte) (fileBytes[i] ^ passBytes[i % passBytes.length]);
-		}
-		return encryptedBytes;
+		boolean obfuscate = line.hasOption("o");
+		boolean verbose = line.hasOption("v");
+		for (File f : files) Encryptor.encryptFile(f, passphrase, obfuscate, verbose);
 	}
 	
 	/**
