@@ -105,7 +105,13 @@ public class Main {
 		if (passphrase == null) return;
 		boolean obfuscate = line.hasOption("o");
 		boolean verbose = line.hasOption("v");
-		for (File f : files) Encryptor.encryptFile(f, passphrase, obfuscate, verbose);
+		int status = 0;
+		for (File f : files) {
+			if (!Encryptor.encryptFile(f, passphrase, obfuscate, verbose)) {
+				status = 1;
+			}
+		}
+		System.exit(status);
 	}
 	
 	/**
