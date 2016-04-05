@@ -61,7 +61,7 @@ public class Main {
 		if (args.length == 0) {
 			System.out.println("No args given");
 			printHelp();
-			return;
+			System.exit(1);
 		}
 		CommandLineParser parser = new DefaultParser();
 		try {
@@ -70,6 +70,7 @@ public class Main {
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
 			printHelp();
+			System.exit(1);
 		}
 	}
 	
@@ -91,7 +92,7 @@ public class Main {
 		if (files.size() == 0) {
 			System.out.println("No files given");
 			printHelp();
-			return;
+			System.exit(1);
 		}
 		final String passphrase;
 		if (line.hasOption("p")) {
